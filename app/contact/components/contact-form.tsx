@@ -126,24 +126,22 @@ const CRM_ENDPOINT =
   process.env.NEXT_PUBLIC_CRM_ENDPOINT ??
   'https://crm-phi-gray.vercel.app/api/submissions'
 
-// The CRM stores a single message field, so fold the structured answers
-// (services / timeline / investment) into it. Lengths are clamped to the CRM's
-// field caps so a long answer is never silently rejected.
+// The CRM keeps the free-text description as `message` and captures the
+// structured answers (services / timeline / investment) as an ordered
+// label/value `fields` array. Lengths are clamped to the CRM's field caps.
 function crmPayload(d: FormState) {
-  const meta = [
-    d.services.length ? `Services: ${d.services.join(', ')}` : '',
-    d.timeline ? `Timeline: ${d.timeline}` : '',
-    d.investment ? `Investment: ${d.investment}` : '',
-  ]
-    .filter(Boolean)
-    .join('\n')
-  const message = (meta ? `${meta}\n\n${d.description}` : d.description).slice(0, 5000)
+  const fields = [
+    d.services.length ? { label: 'Services', value: d.services.join(', ') } : null,
+    d.timeline ? { label: 'Timeline', value: d.timeline } : null,
+    d.investment ? { label: 'Investment', value: d.investment } : null,
+  ].filter((f): f is { label: string; value: string } => f !== null)
   return {
     name: d.fullName.slice(0, 200),
     email: d.email.slice(0, 320),
     phone: d.phone ? phoneInternational(d.phone, d.phoneCountry).slice(0, 40) : '',
     company: d.company.slice(0, 200),
-    message,
+    message: (d.description.trim() || '—').slice(0, 5000),
+    fields,
     source: 'dev',
     website: '',
   }
