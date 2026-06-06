@@ -120,6 +120,35 @@ const phoneInternational = (phone: string, iso: string) => {
   return ayt.getNumber()?.formatInternational() ?? `${countryOf(iso).dial} ${phone}`
 }
 
+// CRM submission endpoint. Override per-environment with NEXT_PUBLIC_CRM_ENDPOINT
+// (e.g. when the CRM moves to a custom domain).
+const CRM_ENDPOINT =
+  process.env.NEXT_PUBLIC_CRM_ENDPOINT ??
+  'https://crm-phi-gray.vercel.app/api/submissions'
+
+// The CRM stores a single message field, so fold the structured answers
+// (services / timeline / investment) into it. Lengths are clamped to the CRM's
+// field caps so a long answer is never silently rejected.
+function crmPayload(d: FormState) {
+  const meta = [
+    d.services.length ? `Services: ${d.services.join(', ')}` : '',
+    d.timeline ? `Timeline: ${d.timeline}` : '',
+    d.investment ? `Investment: ${d.investment}` : '',
+  ]
+    .filter(Boolean)
+    .join('\n')
+  const message = (meta ? `${meta}\n\n${d.description}` : d.description).slice(0, 5000)
+  return {
+    name: d.fullName.slice(0, 200),
+    email: d.email.slice(0, 320),
+    phone: d.phone ? phoneInternational(d.phone, d.phoneCountry).slice(0, 40) : '',
+    company: d.company.slice(0, 200),
+    message,
+    source: 'dev',
+    website: '',
+  }
+}
+
 const labelCls =
   'block text-[10px] uppercase tracking-[0.28em] text-cream/45 font-mono mb-3'
 const inputCls =
@@ -160,6 +189,8 @@ export function ContactForm() {
   const [maxReached, setMaxReached] = useState(0)
   const [data, setData] = useState<FormState>(EMPTY)
   const [submitted, setSubmitted] = useState(false)
+  const [sendError, setSendError] = useState(false)
+  const [sending, setSending] = useState(false)
   const [focusField, setFocusField] = useState<string | null>(null)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
 
@@ -210,13 +241,34 @@ export function ContactForm() {
   const canContinue = stepValid(step)
   const isLast = step === STEPS.length - 1
 
+  const submit = async () => {
+    if (sending) return
+    setSending(true)
+    setSendError(false)
+    try {
+      const res = await fetch(CRM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(crmPayload(data)),
+      })
+      if (!res.ok) throw new Error('bad status')
+      setSubmitted(true)
+    } catch {
+      // The endpoint always 200s on its own rejections, so this is a genuine
+      // network failure — keep the user on the form so the lead isn't lost.
+      setSendError(true)
+    } finally {
+      setSending(false)
+    }
+  }
+
   const next = () => {
     if (!canContinue) {
       if (STEP_FIELDS[step]) touchAll(STEP_FIELDS[step])
       return
     }
     if (isLast) {
-      setSubmitted(true)
+      void submit()
       return
     }
     const ns = Math.min(STEPS.length - 1, step + 1)
@@ -442,7 +494,7 @@ export function ContactForm() {
                   className="text-[15px] md:text-[16px] font-body font-medium transition-colors duration-500"
                   style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
                 >
-                  {isLast ? 'Submit' : 'Continue'}
+                  {isLast ? (sending ? 'Sending…' : 'Submit') : 'Continue'}
                 </span>
                 <span
                   aria-hidden
@@ -453,6 +505,19 @@ export function ContactForm() {
                 </span>
               </button>
             </div>
+
+            {sendError && (
+              <p
+                className="mt-4 text-[12px] font-mono tracking-[0.04em] text-right"
+                style={{ color: ERR }}
+              >
+                Something went wrong sending your brief. Please try again, or email{' '}
+                <a href="mailto:projects@arrvl.studio" className="underline">
+                  projects@arrvl.studio
+                </a>
+                .
+              </p>
+            )}
           </>
         )}
       </div>
