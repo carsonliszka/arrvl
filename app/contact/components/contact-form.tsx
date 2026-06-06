@@ -452,6 +452,34 @@ export function ContactForm() {
                     <StepDetails data={data} set={set} touched={touched} markTouched={markTouched} />
                   )}
                   {step === 3 && <StepReview data={data} jumpTo={jumpTo} />}
+                  {isLast && (
+                    <div className="mt-8 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={next}
+                        aria-disabled={!canContinue}
+                        className="group inline-flex items-center gap-2.5 border px-7 md:px-8 py-3 md:py-3.5 transition-all duration-500"
+                        style={{
+                          borderColor: canContinue ? 'var(--cream)' : 'rgba(255,253,226,0.18)',
+                          background: canContinue ? 'var(--cream)' : 'transparent',
+                        }}
+                      >
+                        <span
+                          className="text-[15px] md:text-[16px] font-body font-medium transition-colors duration-500"
+                          style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
+                        >
+                          {sending ? 'Sending…' : 'Submit'}
+                        </span>
+                        <span
+                          aria-hidden
+                          className="text-[13px] leading-none transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                          style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
+                        >
+                          {'↗'}
+                        </span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -480,30 +508,32 @@ export function ContactForm() {
                 </p>
               )}
 
-              <button
-                type="button"
-                onClick={next}
-                aria-disabled={!canContinue}
-                className="group inline-flex items-center gap-2.5 border px-7 md:px-8 py-3 md:py-3.5 transition-all duration-500"
-                style={{
-                  borderColor: canContinue ? 'var(--cream)' : 'rgba(255,253,226,0.18)',
-                  background: canContinue ? 'var(--cream)' : 'transparent',
-                }}
-              >
-                <span
-                  className="text-[15px] md:text-[16px] font-body font-medium transition-colors duration-500"
-                  style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
+              {!isLast && (
+                <button
+                  type="button"
+                  onClick={next}
+                  aria-disabled={!canContinue}
+                  className="group inline-flex items-center gap-2.5 border px-7 md:px-8 py-3 md:py-3.5 transition-all duration-500"
+                  style={{
+                    borderColor: canContinue ? 'var(--cream)' : 'rgba(255,253,226,0.18)',
+                    background: canContinue ? 'var(--cream)' : 'transparent',
+                  }}
                 >
-                  {isLast ? (sending ? 'Sending…' : 'Submit') : 'Continue'}
-                </span>
-                <span
-                  aria-hidden
-                  className="text-[13px] leading-none transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
-                >
-                  {'↗'}
-                </span>
-              </button>
+                  <span
+                    className="text-[15px] md:text-[16px] font-body font-medium transition-colors duration-500"
+                    style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
+                  >
+                    Continue
+                  </span>
+                  <span
+                    aria-hidden
+                    className="text-[13px] leading-none transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    style={{ color: canContinue ? '#0b0b0b' : 'rgba(255,253,226,0.35)' }}
+                  >
+                    {'↗'}
+                  </span>
+                </button>
+              )}
             </div>
 
             {sendError && (
