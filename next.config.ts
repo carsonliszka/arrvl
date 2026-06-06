@@ -27,7 +27,8 @@ const csp = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' blob: data:",
   "font-src 'self'",
-  `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
+  // Allow the contact form to POST submissions to the self-hosted CRM.
+  `connect-src 'self' https://crm-phi-gray.vercel.app${isDev ? " ws: wss:" : ""}`,
   "worker-src 'self' blob:",
   "object-src 'none'",
   "base-uri 'self'",
