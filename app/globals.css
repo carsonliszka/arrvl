@@ -1,0 +1,157 @@
+@import "tailwindcss";
+
+:root {
+  --background: #01040B;
+  --foreground: #FFFDE2;
+  --cream: #FFFDE2;
+  --cream-muted: rgba(255, 253, 226, 0.55);
+  --cream-dim: rgba(255, 253, 226, 0.3);
+  --navy-black: #01040B;
+  --navy-dark: #051236;
+  --gray-muted: #50586A;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cream: var(--cream);
+  --color-cream-muted: var(--cream-muted);
+  --color-cream-dim: var(--cream-dim);
+  --color-navy-black: var(--navy-black);
+  --color-navy-dark: var(--navy-dark);
+  --color-gray-muted: var(--gray-muted);
+  --font-heading: var(--font-aeonik), var(--font-geist), system-ui, sans-serif;
+  --font-body: var(--font-geist);
+  --font-paragraph: var(--font-dm-sans);
+  --font-mono: var(--font-plex-mono), ui-monospace, monospace;
+}
+
+html {
+  background: var(--background);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+html.scroll-locked,
+body.scroll-locked {
+  overflow: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+}
+
+button, a, input, textarea, select, img, picture, video, section, article, aside, div, span:not(.rounded-full):not(.rounded-\[50\%\]) {
+  border-radius: 0;
+}
+.rounded-full {
+  border-radius: 9999px !important;
+}
+
+::selection {
+  background: rgba(255, 253, 226, 0.15);
+  color: var(--cream);
+}
+
+.noise-overlay {
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.12;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+}
+
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 30;
+  opacity: 0.095;
+  mix-blend-mode: screen;
+  image-rendering: pixelated;
+}
+
+.proj-marquee {
+  animation: proj-marquee 36s linear infinite;
+}
+@keyframes proj-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .proj-marquee { animation: none; }
+}
+
+/* 404 — interactive paint version (devices with a real cursor) vs the clean
+   static version (touch / no-hover). Matches the pointer gate the 404 canvases
+   use, so mobile users get the simple branded page. */
+.nf-fine {
+  display: none;
+}
+.nf-coarse {
+  display: block;
+}
+@media (hover: hover) and (pointer: fine) {
+  .nf-fine {
+    display: block;
+  }
+  .nf-coarse {
+    display: none;
+  }
+}
+
+.legal-prose {
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-geist);
+  font-size: 15px;
+  line-height: 1.7;
+}
+.legal-prose h1 {
+  font-family: var(--font-geist);
+  font-weight: 600;
+  color: #ffffff;
+  font-size: clamp(32px, 4.5vw, 52px);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin-bottom: 1.5rem;
+}
+.legal-prose h2 {
+  font-family: var(--font-geist);
+  font-weight: 600;
+  color: #ffffff;
+  font-size: clamp(19px, 2.2vw, 24px);
+  letter-spacing: -0.01em;
+  margin-top: 2.75rem;
+  margin-bottom: 0.9rem;
+}
+.legal-prose p {
+  margin-bottom: 1.15rem;
+}
+.legal-prose strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+.legal-prose a {
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(255, 255, 255, 0.4);
+  transition: text-decoration-color 0.3s ease;
+}
+.legal-prose a:hover {
+  text-decoration-color: #ffffff;
+}
+.legal-prose ul {
+  list-style: disc;
+  padding-left: 1.3em;
+  margin: 0 0 1.15rem;
+}
+.legal-prose li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.2em;
+}
+.legal-prose li::marker {
+  color: rgba(255, 255, 255, 0.4);
+}
