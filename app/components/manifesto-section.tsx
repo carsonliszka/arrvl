@@ -223,7 +223,7 @@ export function ManifestoSection() {
         </h2>
       </div>
 
-      <div className="mx-auto grid max-w-[1280px] grid-cols-12 gap-x-10 gap-y-14">
+      <div className="mx-auto grid max-w-[1280px] grid-cols-12 gap-y-14 lg:gap-x-10">
         <div className="col-span-12 lg:col-span-5">
           <div data-sticky className="lg:sticky lg:top-32">
             <span

@@ -45,7 +45,7 @@ export function ProjectsCTA() {
   return (
     <section ref={sectionRef} className="bg-[#0b0b0b]">
       <div className="px-6 py-28 md:px-10 md:py-40 lg:px-16">
-        <div className="mx-auto grid max-w-[1500px] grid-cols-12 items-center gap-10">
+        <div className="mx-auto grid max-w-[1500px] grid-cols-12 items-center lg:gap-10">
         <div className="hidden lg:col-span-5 lg:block">
           <ImagePillars src="/projects/liszka-construction.png" />
         </div>
