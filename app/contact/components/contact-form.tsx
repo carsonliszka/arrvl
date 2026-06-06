@@ -1238,9 +1238,9 @@ function SubmittedView({ data }: { data: FormState }) {
         <span className="block">{data.fullName.split(' ')[0] || 'friend'}.</span>
       </h1>
       <p className="mt-8 text-[15px] md:text-[16px] leading-[1.6] text-cream-dim font-body max-w-[440px]">
-        Your brief is in. We read every one ourselves and will be in touch at{' '}
-        <span className="text-cream">{data.email}</span> within two business
-        hours.
+        We read every one ourselves and will be in touch at{' '}
+        <span className="text-cream">{data.email}</span> within{' '}
+        <strong className="font-semibold text-cream">two business hours.</strong>
       </p>
 
       <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">
