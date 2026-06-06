@@ -15,7 +15,7 @@ export default function ContactPage() {
     <div className="relative min-h-screen overflow-x-clip bg-[#0b0b0b]">
       <ContactBackground />
       <div className="relative z-10">
-        <Header />
+        <Header showCta={false} />
         <main>
           <ContactForm />
         </main>
