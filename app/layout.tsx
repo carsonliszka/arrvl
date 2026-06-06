@@ -7,6 +7,7 @@ import { LoaderProvider } from './providers/loader-context'
 import { TransitionProvider } from './providers/transition-provider'
 import { GrainOverlay } from './components/grain-overlay'
 import { ConsoleMessage } from './components/console-message'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
 const aeonik = localFont({
@@ -61,6 +62,7 @@ export default function RootLayout({
         </GSAPProvider>
         <GrainOverlay />
         <ConsoleMessage />
+        <Analytics />
       </body>
     </html>
   )
