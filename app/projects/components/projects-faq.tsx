@@ -16,7 +16,7 @@ const FAQS = [
     a: 'Brand identity, websites, and motion, mostly for teams who want to look unlike anyone else in their category. If it’s creatively ambitious, we want in.',
   },
   {
-    q: 'Do I need a finished brief before reaching out?',
+    q: 'Do I need everything figured out before reaching out?',
     a: 'Not at all. A sentence and a hunch is plenty. Half of what we do is help you figure out what’s actually worth building before anyone designs a thing.',
   },
   {

@@ -23,7 +23,7 @@ const HEADINGS: Array<{ a: string; b: string; sub: ReactNode }> = [
   { a: 'A short conversation', b: 'with a clear next step.', sub: 'Start the conversation and we’ll take it from there.' },
   { a: 'What are we', b: 'building?', sub: 'Pick what you’re looking for and we’ll guide the rest.' },
   { a: 'Share the', b: 'vision.', sub: 'A few details help us understand the project clearly.' },
-  { a: 'Ready when', b: 'you are.', sub: <>Take a quick look. Click any row to edit. We usually respond to most inquiries within <strong className="font-semibold text-cream/70">two business hours.</strong></> },
+  { a: 'Ready when', b: 'you are.', sub: <>Take a quick look. Click any row to edit. We will get back to you <strong className="font-semibold text-cream/70">shortly.</strong></> },
 ]
 
 const SERVICES = [
@@ -33,7 +33,7 @@ const SERVICES = [
   { n: '04', glyph: '04', title: 'Motion & Animation', desc: 'Motion design, transitions, and custom animations.', items: ['WebGL & Shaders', 'UI Transitions', 'Motion Design', 'Scroll Animation'] },
   { n: '05', glyph: '05', title: 'Creative Direction', desc: 'Brand-level guidance and art direction across surfaces.', items: ['Art Direction', 'Concept & Strategy', 'Visual Language', 'Campaign Direction'] },
   { n: '06', glyph: '06', title: 'Ongoing Support', desc: 'Hosting, fixes, content updates, and quarterly health checks.', items: ['Hosting & Uptime', 'Content Updates', 'Fixes & Tuning', 'Quarterly Reviews'] },
-  { n: '07', glyph: '07', title: 'Just exploring', desc: 'Not sure where to start? Let’s have a conversation about what you need.', items: ['Discovery Call', 'Scoping', 'Recommendations', 'No Commitment'] },
+  { n: '07', glyph: '07', title: 'Just exploring', desc: 'Not sure where to start? Let’s have a conversation about what you need.', items: ['Discovery Call or Email', 'Scoping', 'Recommendations', 'No Commitment'] },
 ]
 
 const TIMELINES = [
@@ -102,6 +102,8 @@ const EMPTY: FormState = {
   timeline: '',
   investment: '',
 }
+
+const STORAGE_KEY = 'arrvl_contact_form_v1'
 
 const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())
 
@@ -191,6 +193,7 @@ export function ContactForm() {
   const [sending, setSending] = useState(false)
   const [focusField, setFocusField] = useState<string | null>(null)
   const [touched, setTouched] = useState<Record<string, boolean>>({})
+  const [hydrated, setHydrated] = useState(false)
 
   const markTouched = (f: string) => setTouched((t) => ({ ...t, [f]: true }))
   const touchAll = (fields: string[]) =>
@@ -251,6 +254,9 @@ export function ContactForm() {
       })
       if (!res.ok) throw new Error('bad status')
       setSubmitted(true)
+      try {
+        localStorage.removeItem(STORAGE_KEY)
+      } catch {}
     } catch {
       // The endpoint always 200s on its own rejections, so this is a genuine
       // network failure — keep the user on the form so the lead isn't lost.
@@ -279,6 +285,31 @@ export function ContactForm() {
     setStep(i)
     setFocusField(field ?? null)
   }
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY)
+      if (raw) {
+        const saved = JSON.parse(raw) as {
+          data?: Partial<FormState>
+          step?: number
+          maxReached?: number
+        }
+        if (saved.data) setData((d) => ({ ...d, ...saved.data }))
+        const clamp = (n: number) => Math.min(STEPS.length - 1, Math.max(0, n))
+        if (typeof saved.step === 'number') setStep(clamp(saved.step))
+        if (typeof saved.maxReached === 'number') setMaxReached(clamp(saved.maxReached))
+      }
+    } catch {}
+    setHydrated(true)
+  }, [])
+
+  useEffect(() => {
+    if (!hydrated || submitted) return
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ data, step, maxReached }))
+    } catch {}
+  }, [hydrated, submitted, data, step, maxReached])
 
   const panelRef = useRef<HTMLDivElement>(null)
   useGSAP(
@@ -501,8 +532,8 @@ export function ContactForm() {
 
               {isLast && (
                 <p className="hidden md:block text-[11px] font-mono uppercase tracking-[0.18em] text-cream-dim/60">
-                  We usually respond to most inquiries within{' '}
-                  <strong className="font-semibold text-cream/80">two business hours</strong>
+                  We will get back to you{' '}
+                  <strong className="font-semibold text-cream/80">shortly</strong>
                 </p>
               )}
 
@@ -539,7 +570,7 @@ export function ContactForm() {
                 className="mt-4 text-[12px] font-mono tracking-[0.04em] text-right"
                 style={{ color: ERR }}
               >
-                Something went wrong sending your brief. Please try again, or email{' '}
+                Something went wrong sending your message. Please try again, or email{' '}
                 <a href="mailto:projects@arrvl.studio" className="underline">
                   projects@arrvl.studio
                 </a>
@@ -1267,8 +1298,8 @@ function SubmittedView({ data }: { data: FormState }) {
       </h1>
       <p className="mt-8 text-[15px] md:text-[16px] leading-[1.6] text-cream-dim font-body max-w-[440px]">
         We read every one ourselves and will be in touch at{' '}
-        <span className="text-cream">{data.email}</span> within{' '}
-        <strong className="font-semibold text-cream">two business hours.</strong>
+        <span className="text-cream">{data.email}</span>{' '}
+        <strong className="font-semibold text-cream">shortly.</strong>
       </p>
 
       <div className="mt-12 flex flex-col sm:flex-row items-center gap-4">

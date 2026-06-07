@@ -10,14 +10,12 @@ import { MenuOverlay } from './menu-overlay'
 const geist = 'font-[family-name:var(--font-geist)]'
 
 const NAV = [
+  { label: 'Home', href: '/' },
   { label: 'About', href: '/about' },
   { label: 'Projects', href: '/projects' },
   { label: 'Contact', href: '/contact' },
 ]
 
-// Top nav, matched to the home hero. Sits absolute at the top of the page
-// (scrolls away like the hero, so cream text never lands on the mid-page light panels).
-// Inline links on desktop; a hamburger -> MenuOverlay on mobile.
 export function SiteHeader({ showCta = true }: { showCta?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)

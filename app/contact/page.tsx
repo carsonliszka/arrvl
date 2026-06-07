@@ -7,7 +7,7 @@ import { ContactForm } from './components/contact-form'
 export const metadata = {
   title: 'Contact · ARRVL',
   description:
-    'Start a project with ARRVL. A short, four-step brief and we usually respond to most inquiries within two business hours.',
+    'Start a project with ARRVL. A few quick questions and we will get back to you shortly.',
 }
 
 export default function ContactPage() {

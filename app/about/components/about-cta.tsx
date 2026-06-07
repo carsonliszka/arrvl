@@ -75,9 +75,9 @@ export function AboutCTA() {
               className={`mt-9 max-w-[440px] text-[12px] font-medium uppercase leading-[1.6] tracking-[0.02em] text-white/55 ${geist}`}
               style={{ opacity: 0 }}
             >
-              Whether you have a full brief or just an idea, we are here to help
-              shape it. No pitch decks, no sales calls.{' '}
-              <span className="text-white">Just a clean next step.</span>
+              Whether you have it all figured out or just an idea, we are here to
+              help shape it.{' '}
+              <span className="text-white">Just a clear next step.</span>
             </p>
 
             <div data-cta-fade className="mt-10 flex flex-wrap items-center gap-8" style={{ opacity: 0 }}>
@@ -94,8 +94,8 @@ export function AboutCTA() {
             </div>
 
             <p data-cta-fade className={`mt-8 text-[11px] uppercase tracking-[0.04em] text-white/35 ${geist}`} style={{ opacity: 0 }}>
-              We usually respond to most inquiries within{' '}
-              <strong className="font-semibold text-white/60">two business hours.</strong>
+              We will get back to you{' '}
+              <strong className="font-semibold text-white/60">shortly.</strong>
             </p>
           </div>
         </div>

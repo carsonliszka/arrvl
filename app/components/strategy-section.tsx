@@ -1,16 +1,19 @@
 'use client'
 
+import { useState } from 'react'
 import { TransitionLink } from './transition-link'
 import { HoverText } from './hover-text'
 import { CtaArrow } from './cta'
+import { ShowreelModal } from './showreel-modal'
 
 const geist = 'font-[family-name:var(--font-geist)]'
 const ink = 'text-[#0b0b0b]'
 
-// Temporary image until final photography is added.
 const IMG = '/showreel-poster.jpg'
 
 export function StrategySection() {
+  const [reelOpen, setReelOpen] = useState(false)
+
   return (
     <>
       {/* ───────── STRATEGY BEFORE PIXELS (cream block) ───────── */}
@@ -65,14 +68,14 @@ export function StrategySection() {
             </p>
           </div>
 
-          {/* about us — bottom left */}
+          {/* see the work — bottom left */}
           <div className="mt-14 lg:absolute lg:bottom-16 lg:left-[16%] lg:mt-0">
             <TransitionLink
-              href="/about"
+              href="/projects"
               className={`group inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.14em] ${ink} ${geist}`}
             >
-              <HoverText text="About us" />
-              <CtaArrow size={16} />
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">&darr;</span>
+              <HoverText text="See the work" />
             </TransitionLink>
           </div>
         </div>
@@ -85,15 +88,15 @@ export function StrategySection() {
           className="pointer-events-none absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-cream/12 lg:block"
         />
 
-        <div className="relative mx-auto max-w-[1600px] px-6 py-20 md:px-10 md:py-24 lg:min-h-[680px] lg:px-14 lg:py-20">
+        <div className="relative mx-auto max-w-[1600px] px-6 py-20 md:px-10 md:py-24 lg:min-h-[920px] lg:px-14 lg:pb-20 lg:pt-8">
           <div className="flex justify-end">
             <span className={`text-[11px] uppercase tracking-[0.16em] text-cream/40 ${geist}`}>2018&ndash;26©</span>
           </div>
 
           {/* headline — center */}
           <h2
-            className={`mt-10 text-center font-semibold uppercase leading-[0.85] tracking-[-0.03em] lg:mt-16 lg:w-1/2 lg:text-right ${geist}`}
-            style={{ fontSize: 'clamp(48px,8vw,124px)' }}
+            className={`mt-10 text-center font-semibold uppercase leading-[0.85] tracking-[-0.03em] lg:mt-10 lg:w-1/2 lg:text-right ${geist}`}
+            style={{ fontSize: 'clamp(40px,6vw,104px)' }}
           >
             Prove<br />What&rsquo;s<br />Possible.
           </h2>
@@ -117,27 +120,32 @@ export function StrategySection() {
           </div>
 
           {/* bottom row */}
-          <div className="mt-16 flex items-center justify-between lg:absolute lg:inset-x-14 lg:bottom-16 lg:mt-0">
+          <div className="mt-16 flex items-center justify-between lg:mt-0 lg:block">
             <TransitionLink
-              href="/projects"
-              className={`group inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.14em] text-cream ${geist}`}
+              href="/about"
+              className={`group inline-flex items-center gap-2 text-[12px] font-medium uppercase tracking-[0.14em] text-cream lg:absolute lg:bottom-6 lg:left-0 ${geist}`}
             >
-              <span aria-hidden className="transition-transform duration-300 group-hover:translate-y-0.5">&darr;</span>
-              <HoverText text="See the work" />
+              <HoverText text="About us" />
+              <CtaArrow size={16} />
             </TransitionLink>
 
-            <TransitionLink
-              href="/projects"
-              className={`group inline-flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.14em] text-cream ${geist}`}
+            <button
+              type="button"
+              onClick={() => setReelOpen(true)}
+              className={`group inline-flex items-center gap-3 text-[12px] font-medium uppercase tracking-[0.14em] text-cream lg:absolute lg:right-1/2 lg:bottom-3 ${geist}`}
             >
               <HoverText text="Showreel" />
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cream text-[#0b0b0b] transition-transform duration-300 group-hover:scale-105">
-                <span aria-hidden className="ml-0.5 text-[10px] leading-none">&#9654;</span>
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-cream transition-transform duration-300 group-hover:scale-105">
+                <svg width="10" height="12" viewBox="0 0 10 12" fill="none" aria-hidden className="ml-[2px]">
+                  <path d="M0 0L10 6L0 12V0Z" fill="#0b0b0b" />
+                </svg>
               </span>
-            </TransitionLink>
+            </button>
           </div>
         </div>
       </section>
+
+      <ShowreelModal open={reelOpen} onClose={() => setReelOpen(false)} src="/showreel-full.mp4" />
     </>
   )
 }

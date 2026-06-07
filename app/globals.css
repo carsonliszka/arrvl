@@ -26,6 +26,11 @@
   --font-mono: var(--font-plex-mono), ui-monospace, monospace;
 }
 
+button:not(:disabled),
+[role="button"]:not([aria-disabled="true"]) {
+  cursor: pointer;
+}
+
 html {
   background: var(--background);
 }

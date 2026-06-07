@@ -80,9 +80,9 @@ export function ProjectsCTA() {
             className="mt-9 max-w-[460px] font-[family-name:var(--font-geist)] text-[12px] font-medium uppercase leading-[1.6] tracking-[0.02em] text-white/55"
             style={{ opacity: 0 }}
           >
-            Whether you have a full brief or just an idea, we&apos;re here to
-            help shape it. No pitch decks, no sales calls.{' '}
-            <span className="text-white">Just a clean next step.</span>
+            Whether you have it all figured out or just an idea, we&apos;re here
+            to help shape it.{' '}
+            <span className="text-white">Just a clear next step.</span>
           </p>
 
           <div
@@ -110,8 +110,8 @@ export function ProjectsCTA() {
             className="mt-8 font-[family-name:var(--font-geist)] text-[11px] uppercase tracking-[0.04em] text-white/35"
             style={{ opacity: 0 }}
           >
-            We usually respond to most inquiries within{' '}
-            <strong className="font-semibold text-white/60">two business hours.</strong>
+            We will get back to you{' '}
+            <strong className="font-semibold text-white/60">shortly.</strong>
           </p>
         </div>
         </div>

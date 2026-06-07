@@ -1,6 +1,7 @@
 import { PageLoader } from './components/page-loader'
 import { HeroSection } from './components/hero-section'
 import { StrategySection } from './components/strategy-section'
+import { StartProjectBand } from './components/start-project-band'
 import { Footer } from './components/footer'
 import { CookieBanner } from './components/cookie-banner'
 
@@ -12,6 +13,7 @@ export default function Page() {
         <main>
           <HeroSection />
           <StrategySection />
+          <StartProjectBand />
         </main>
         <Footer />
         <CookieBanner />

@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { TransitionLink } from './transition-link'
+import { HoverText } from './hover-text'
 
 const ICON_SIZE = 20
 
@@ -116,9 +117,9 @@ export function Footer() {
           </p>
           <a
             href="mailto:hello@arrvl.studio"
-            className="mb-1 block text-[15px] text-white transition-colors hover:text-white/70"
+            className="group mb-1 inline-block text-[15px] text-white"
           >
-            hello@arrvl.studio
+            <HoverText text="hello@arrvl.studio" />
           </a>
           <p className="text-[14px] text-white/55">(619) 514-7174</p>
         </div>
@@ -136,13 +137,10 @@ export function Footer() {
           </p>
           <TransitionLink
             href="/projects"
-            className="group mt-6 inline-flex items-baseline gap-1.5 text-[13px] text-white"
+            className="group mt-6 inline-flex items-center gap-1.5 text-[13px] text-white"
           >
             <span className="text-white/45">↳</span>
-            <span className="relative">
-              Our work
-              <span className="absolute -bottom-0.5 left-0 h-px w-full origin-left scale-x-100 bg-white/60" />
-            </span>
+            <HoverText text="Our work" />
           </TransitionLink>
         </div>
 
@@ -152,9 +150,9 @@ export function Footer() {
           </p>
           <a
             href="mailto:hiring@arrvl.studio"
-            className="text-[15px] text-white transition-colors hover:text-white/70"
+            className="group inline-block text-[15px] text-white"
           >
-            hiring@arrvl.studio
+            <HoverText text="hiring@arrvl.studio" />
           </a>
         </div>
       </div>

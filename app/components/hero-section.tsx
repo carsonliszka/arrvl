@@ -213,28 +213,29 @@ export function HeroSection() {
               </div>
 
               <div
-                className="mt-auto flex flex-wrap items-end justify-between gap-4 pt-10"
+                className="mt-auto flex flex-wrap items-center justify-between gap-4 pt-10 lg:flex-nowrap"
                 style={reveal(0.86)}
               >
-                <div className={`flex items-center gap-3.5 text-[13px] uppercase tracking-[0.12em] text-cream md:text-[14px] ${geist}`}>
+                <div className={`flex items-center gap-3 text-[11px] uppercase tracking-[0.12em] text-cream md:text-[12px] ${geist}`}>
                   <span>Design</span>
                   <span className="text-cream/30">/</span>
                   <span>Development</span>
                   <span className="text-cream/30">/</span>
                   <span>Motion</span>
                 </div>
-                <div className="group relative inline-block">
+                <div className="flex shrink-0 items-center gap-3">
+                  <TransitionLink
+                    href="/contact"
+                    className={`group inline-flex w-[180px] items-center justify-center border border-transparent bg-cream px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#0b0b0b] transition-colors duration-300 hover:bg-cream/85 ${geist}`}
+                  >
+                    <HoverText text="Start a project" />
+                  </TransitionLink>
                   <TransitionLink
                     href="/projects"
-                    className={`inline-flex items-center gap-2 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-cream transition-colors duration-300 ${geist}`}
+                    className={`group inline-flex w-[180px] items-center justify-center border border-cream/30 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-cream transition-colors duration-300 hover:border-cream/60 hover:bg-cream/5 ${geist}`}
                   >
                     <HoverText text="Take a look" />
-                    <CtaArrow size={16} />
                   </TransitionLink>
-                  <span className="pointer-events-none absolute -left-[5px] -top-[5px] h-2.5 w-2.5 border-l border-t border-cream/70 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:h-[calc(50%_+_10px)] group-hover:w-[calc(50%_+_10px)] group-hover:border-cream" />
-                  <span className="pointer-events-none absolute -right-[5px] -top-[5px] h-2.5 w-2.5 border-r border-t border-cream/70 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:h-[calc(50%_+_10px)] group-hover:w-[calc(50%_+_10px)] group-hover:border-cream" />
-                  <span className="pointer-events-none absolute -bottom-[5px] -left-[5px] h-2.5 w-2.5 border-b border-l border-cream/70 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:h-[calc(50%_+_10px)] group-hover:w-[calc(50%_+_10px)] group-hover:border-cream" />
-                  <span className="pointer-events-none absolute -bottom-[5px] -right-[5px] h-2.5 w-2.5 border-b border-r border-cream/70 transition-all duration-300 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:h-[calc(50%_+_10px)] group-hover:w-[calc(50%_+_10px)] group-hover:border-cream" />
                 </div>
               </div>
             </div>
