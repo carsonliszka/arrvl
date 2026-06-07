@@ -80,6 +80,19 @@ export function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
       className="fixed inset-0 z-[55] flex flex-col overflow-hidden bg-[#0b0b0b] font-[family-name:var(--font-geist)]"
       style={{ clipPath: 'inset(0% 0% 100% 0%)' }}
     >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close menu"
+        className="group absolute right-6 top-6 z-20 flex h-11 w-11 items-center justify-center md:right-10 md:top-7 lg:right-20"
+      >
+        <span className="absolute inset-0 scale-75 rounded-full border border-white/20 opacity-0 transition-all duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:scale-100 group-hover:opacity-100" />
+        <span className="relative block h-3.5 w-3.5 transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] group-hover:rotate-90">
+          <span className="absolute left-1/2 top-1/2 h-[1.5px] w-full -translate-x-1/2 -translate-y-1/2 rotate-45 bg-white/60 transition-colors duration-300 group-hover:bg-white" />
+          <span className="absolute left-1/2 top-1/2 h-[1.5px] w-full -translate-x-1/2 -translate-y-1/2 -rotate-45 bg-white/60 transition-colors duration-300 group-hover:bg-white" />
+        </span>
+      </button>
+
       <div className="relative z-10 flex flex-1 flex-col items-start justify-center px-10 lg:px-20">
         <nav className="flex flex-col gap-1">
           {NAV_LINKS.map((link) => (

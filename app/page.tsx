@@ -1,7 +1,6 @@
 import { PageLoader } from './components/page-loader'
-import { Header } from './components/header'
 import { HeroSection } from './components/hero-section'
-import { ManifestoSection } from './components/manifesto-section'
+import { StrategySection } from './components/strategy-section'
 import { Footer } from './components/footer'
 import { CookieBanner } from './components/cookie-banner'
 
@@ -10,10 +9,9 @@ export default function Page() {
     <>
       <PageLoader />
       <div className="min-h-screen overflow-x-clip bg-[#0b0b0b]">
-        <Header />
         <main>
           <HeroSection />
-          <ManifestoSection />
+          <StrategySection />
         </main>
         <Footer />
         <CookieBanner />

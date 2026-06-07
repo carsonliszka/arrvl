@@ -67,7 +67,7 @@ export function RotatingWord({ className = '' }: { className?: string }) {
         <span
           key={word}
           data-rotating-word
-          className="absolute top-0 left-0 will-change-[filter,opacity]"
+          className="absolute top-0 left-1/2 -translate-x-1/2 whitespace-nowrap will-change-[filter,opacity]"
           style={{ filter: 'blur(10px)', opacity: 0 }}
         >
           {word}

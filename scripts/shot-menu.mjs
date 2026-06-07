@@ -1,0 +1,16 @@
+import { chromium } from 'playwright'
+
+const browser = await chromium.launch()
+const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 2 })
+const page = await ctx.newPage()
+await page.addInitScript(() => { try { localStorage.setItem('cookie-consent', 'allow') } catch {} })
+await page.goto('http://localhost:3000/', { waitUntil: 'networkidle' })
+await page.waitForTimeout(4200)
+await page.getByRole('button', { name: 'Open menu' }).click()
+await page.waitForTimeout(1100)
+await page.screenshot({ path: 'menu-open.png', clip: { x: 1100, y: 0, width: 340, height: 120 } })
+await page.getByRole('button', { name: 'Close menu' }).hover()
+await page.waitForTimeout(700)
+await page.screenshot({ path: 'menu-hover.png', clip: { x: 1100, y: 0, width: 340, height: 120 } })
+await browser.close()
+console.log('ok')

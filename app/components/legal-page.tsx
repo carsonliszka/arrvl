@@ -1,7 +1,7 @@
 import { readFile } from 'fs/promises'
 import path from 'path'
 import { Marked } from 'marked'
-import { Header } from './header'
+import { SiteHeader } from './site-header'
 import { Footer } from './footer'
 import { CookieBanner } from './cookie-banner'
 
@@ -45,8 +45,8 @@ export async function LegalPage({ file }: { file: string }) {
   const html = await md.parse(raw)
 
   return (
-    <div className="min-h-screen bg-[#0b0b0b]">
-      <Header />
+    <div className="relative min-h-screen bg-[#0b0b0b]">
+      <SiteHeader />
       <main className="px-6 md:px-10 lg:px-14 pt-32 md:pt-40 pb-24 md:pb-28">
         <article
           className="legal-prose mx-auto max-w-[760px]"

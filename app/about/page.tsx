@@ -1,4 +1,4 @@
-import { Header } from '../components/header'
+import { SiteHeader } from '../components/site-header'
 import { Footer } from '../components/footer'
 import { CookieBanner } from '../components/cookie-banner'
 import { AboutHero } from './components/about-hero'
@@ -15,8 +15,8 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-[#0b0b0b]">
-      <Header />
+    <div className="relative min-h-screen bg-[#0b0b0b]">
+      <SiteHeader />
       <main>
         <AboutHero />
         <AboutStory />

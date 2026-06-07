@@ -1,4 +1,4 @@
-import { Header } from '../components/header'
+import { SiteHeader } from '../components/site-header'
 import { CookieBanner } from '../components/cookie-banner'
 import { ProjectsBrowser } from './components/projects-browser'
 import { ProjectsFAQ } from './components/projects-faq'
@@ -13,8 +13,8 @@ export const metadata = {
 
 export default function ProjectsPage() {
   return (
-    <div className="min-h-screen bg-[#0b0b0b]">
-      <Header />
+    <div className="relative min-h-screen bg-[#0b0b0b]">
+      <SiteHeader />
       <main>
         <ProjectsBrowser />
         <ProjectsFAQ />

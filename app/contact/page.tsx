@@ -1,4 +1,4 @@
-import { Header } from '../components/header'
+import { SiteHeader } from '../components/site-header'
 import { Footer } from '../components/footer'
 import { CookieBanner } from '../components/cookie-banner'
 import { ContactBackground } from './components/contact-background'
@@ -15,7 +15,7 @@ export default function ContactPage() {
     <div className="relative min-h-screen overflow-x-clip bg-[#0b0b0b]">
       <ContactBackground />
       <div className="relative z-10">
-        <Header showCta={false} />
+        <SiteHeader showCta={false} />
         <main>
           <ContactForm />
         </main>

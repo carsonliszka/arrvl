@@ -15,12 +15,52 @@ const PARAS = [
   'We become part of your team. No management layers, no distance. You work directly with the people who design and build, from day one to launch.',
 ]
 
-const FACTS = [
-  { v: '2018', l: 'Independent since' },
-  { v: '4', l: 'Disciplines, one roof' },
-  { v: '1', l: 'Team, zero layers' },
-  { v: '100%', l: 'Direct collaboration' },
+const STATS = [
+  {
+    v: '24+',
+    align: 'lg:self-end',
+    label: (
+      <>
+        Projects <span className="text-[#0b0b0b]">shipped</span> with measurable{' '}
+        <span className="text-[#0b0b0b]">conversion lift</span>
+      </>
+    ),
+  },
+  {
+    v: '3.2s',
+    align: 'lg:self-start',
+    label: (
+      <>
+        Average time to first <span className="text-[#0b0b0b]">meaningful action</span> on our sites
+      </>
+    ),
+  },
+  {
+    v: '89%',
+    align: 'lg:self-end',
+    label: (
+      <>
+        Of clients come from <span className="text-[#0b0b0b]">direct referrals</span>
+      </>
+    ),
+  },
 ]
+
+function Stat({ s }: { s: (typeof STATS)[number] }) {
+  return (
+    <div className={`max-w-[260px] ${s.align}`}>
+      <p
+        className={`font-semibold uppercase leading-none tracking-[-0.03em] text-[#0b0b0b] ${geist}`}
+        style={{ fontSize: 'clamp(44px,4vw,68px)' }}
+      >
+        {s.v}
+      </p>
+      <p className={`mt-3 text-[11px] uppercase leading-[1.5] tracking-[0.06em] text-[#0b0b0b]/55 ${geist}`}>
+        {s.label}
+      </p>
+    </div>
+  )
+}
 
 export function AboutStory() {
   const ref = useRef<HTMLElement>(null)
@@ -46,8 +86,9 @@ export function AboutStory() {
   return (
     <section ref={ref} className="bg-[#e9e9e9] text-[#0b0b0b]">
       <div className="px-6 py-24 md:px-10 md:py-32 lg:px-16">
-        <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
+        <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-16 lg:grid-cols-12 lg:gap-16">
+          {/* who we are */}
+          <div className="lg:col-span-6">
             <p data-story-fade className={`mb-8 text-[12px] font-medium uppercase tracking-[0.14em] text-[#0b0b0b]/55 ${geist}`} style={{ opacity: 0 }}>
               Who we are
             </p>
@@ -56,7 +97,7 @@ export function AboutStory() {
                 <p
                   key={i}
                   data-story-fade
-                  className={`max-w-[640px] leading-[1.55] text-[#0b0b0b]/75 ${geist} ${i === 0 ? 'text-[clamp(18px,1.5vw,22px)] text-[#0b0b0b]' : 'text-[15px]'}`}
+                  className={`max-w-[560px] leading-[1.55] text-[#0b0b0b]/75 ${geist} ${i === 0 ? 'text-[clamp(18px,1.5vw,22px)] text-[#0b0b0b]' : 'text-[15px]'}`}
                   style={{ opacity: 0 }}
                 >
                   {p}
@@ -65,20 +106,19 @@ export function AboutStory() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-x-8 gap-y-10 lg:col-span-4 lg:col-start-9 lg:grid-cols-1 lg:gap-y-9">
-            {FACTS.map((f) => (
-              <div key={f.l} data-story-fade style={{ opacity: 0 }}>
-                <p
-                  className={`font-semibold uppercase leading-none tracking-[-0.03em] text-[#0b0b0b] ${geist}`}
-                  style={{ fontSize: 'clamp(40px, 4.5vw, 64px)' }}
-                >
-                  {f.v}
-                </p>
-                <p className={`mt-3 text-[12px] uppercase tracking-[0.08em] text-[#0b0b0b]/55 ${geist}`}>
-                  {f.l}
-                </p>
-              </div>
-            ))}
+          {/* by the numbers — staggered stats + dots */}
+          <div data-story-fade className="lg:col-span-5 lg:col-start-8" style={{ opacity: 0 }}>
+            <p className={`mb-10 text-[12px] font-medium uppercase tracking-[0.14em] text-[#0b0b0b]/55 ${geist}`}>
+              By the numbers
+            </p>
+            <div className="flex flex-col gap-9">
+              <span aria-hidden className="hidden h-2 w-2 rounded-full bg-[#0b0b0b]/40 lg:block lg:self-end" />
+              <Stat s={STATS[0]} />
+              <span aria-hidden className="hidden h-2 w-2 rounded-full bg-[#0b0b0b]/40 lg:block lg:self-start" />
+              <Stat s={STATS[1]} />
+              <span aria-hidden className="hidden h-2 w-2 rounded-full bg-[#0b0b0b]/40 lg:block lg:self-end" />
+              <Stat s={STATS[2]} />
+            </div>
           </div>
         </div>
       </div>
