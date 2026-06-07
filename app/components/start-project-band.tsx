@@ -3,13 +3,11 @@
 import { useState, useRef, useEffect, type FormEvent, type ReactNode } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { useRouter } from 'next/navigation'
 import { TransitionLink } from './transition-link'
 import { HoverText } from './hover-text'
 
 const geist = 'font-[family-name:var(--font-geist)]'
 
-const STORAGE_KEY = 'arrvl_contact_form_v1'
 const CRM_ENDPOINT =
   process.env.NEXT_PUBLIC_CRM_ENDPOINT ??
   'https://crm-phi-gray.vercel.app/api/submissions'
@@ -180,13 +178,15 @@ function Details() {
 }
 
 export function StartProjectBand() {
-  const router = useRouter()
   const [view, setView] = useState<'form' | 'details'>('form')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [service, setService] = useState('')
-  const [website, setWebsite] = useState('')
+  const [honeypot, setHoneypot] = useState('')
   const [touched, setTouched] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [sendError, setSendError] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
   useGSAP(
@@ -194,62 +194,52 @@ export function StartProjectBand() {
       if (panelRef.current)
         gsap.fromTo(panelRef.current, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.45, ease: 'power2.out' })
     },
-    { dependencies: [view], scope: panelRef }
+    { dependencies: [view, submitted], scope: panelRef }
   )
 
-  const valid = name.trim().length > 0 && isEmail(email) && service.length > 0
-
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (website) return
-    if (!valid) {
+    if (sending) return
+    const fd = new FormData(e.currentTarget)
+    if (String(fd.get('contact_ref_code') ?? '')) return
+    const nm = String(fd.get('fullName') ?? '').trim()
+    const em = String(fd.get('email') ?? '').trim()
+    const sv = String(fd.get('service') ?? '')
+    setName(nm)
+    setEmail(em)
+    setService(sv)
+    if (!(nm.length > 0 && isEmail(em) && sv.length > 0)) {
       setTouched(true)
       return
     }
 
+    setSending(true)
+    setSendError(false)
     try {
-      localStorage.setItem(
-        STORAGE_KEY,
-        JSON.stringify({
-          data: {
-            fullName: name.trim(),
-            email: email.trim(),
-            phoneCountry: 'US',
-            phone: '',
-            company: '',
-            services: [service],
-            description: '',
-            timeline: '',
-            investment: '',
-          },
-          step: 2,
-          maxReached: 2,
-        })
-      )
-    } catch {}
-
-    try {
-      void fetch(CRM_ENDPOINT, {
+      const res = await fetch(CRM_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        keepalive: true,
         body: JSON.stringify({
-          name: name.trim().slice(0, 200),
-          email: email.trim().slice(0, 320),
+          name: nm.slice(0, 200),
+          email: em.slice(0, 320),
           phone: '',
           company: '',
           message: '—',
           fields: [
-            { label: 'Services', value: service },
+            { label: 'Services', value: sv },
             { label: 'Origin', value: 'Homepage quick start' },
           ],
           source: 'dev',
-          website: '',
+          contact_ref_code: '',
         }),
-      }).catch(() => {})
-    } catch {}
-
-    router.push('/contact')
+      })
+      if (!res.ok) throw new Error('bad status')
+      setSubmitted(true)
+    } catch {
+      setSendError(true)
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -286,11 +276,11 @@ export function StartProjectBand() {
         <div className="lg:pl-16">
           <h2
             className={`font-semibold uppercase leading-[0.86] tracking-[-0.04em] text-cream ${geist}`}
-            style={{ fontSize: 'clamp(52px,7vw,112px)' }}
+            style={{ fontSize: 'clamp(40px,5.5vw,86px)' }}
           >
-            Start a
+            Start the
             <br />
-            project.
+            Conversation.
           </h2>
 
           <p className={`mt-7 max-w-[460px] text-[12px] font-medium uppercase leading-[1.65] tracking-[0.02em] text-cream/55 ${geist}`}>
@@ -303,24 +293,39 @@ export function StartProjectBand() {
 
             <div ref={panelRef}>
               {view === 'form' ? (
+              submitted ? (
+                <div className="mt-12">
+                  <p
+                    className={`font-semibold uppercase leading-[0.95] tracking-[-0.02em] text-cream ${geist}`}
+                    style={{ fontSize: 'clamp(26px,2.6vw,40px)' }}
+                  >
+                    Thank you, {name.split(' ')[0] || 'there'}.
+                  </p>
+                  <p className={`mt-4 max-w-[440px] text-[14px] leading-[1.6] text-cream/55 ${geist}`}>
+                    We&rsquo;ll be in touch shortly at <span className="text-cream">{email}</span>.
+                  </p>
+                </div>
+              ) : (
               <form onSubmit={submit} className="mt-10" noValidate>
                 <input
                   type="text"
+                  name="contact_ref_code"
                   tabIndex={-1}
                   autoComplete="off"
                   aria-hidden="true"
-                  value={website}
-                  onChange={(e) => setWebsite(e.target.value)}
+                  value={honeypot}
+                  onChange={(e) => setHoneypot(e.target.value)}
                   className="absolute left-[-9999px] h-0 w-0 opacity-0"
                 />
 
                 <Field label="Full name" error={touched && !name.trim() ? 'Please enter your name' : ''}>
-                  <input value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" className={inputCls} />
+                  <input name="fullName" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" className={inputCls} />
                 </Field>
 
                 <Field label="Your email address" error={touched && !isEmail(email) ? 'Please enter a valid email' : ''}>
                   <input
                     type="email"
+                    name="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="example@email.com"
@@ -331,6 +336,7 @@ export function StartProjectBand() {
                 <Field label="What are you looking for?" error={touched && !service ? 'Please pick one' : ''}>
                   <div className="relative">
                     <select
+                      name="service"
                       value={service}
                       onChange={(e) => setService(e.target.value)}
                       className={`${inputCls} cursor-pointer appearance-none pr-10 ${service ? 'text-cream' : 'text-cream/40'}`}
@@ -351,9 +357,10 @@ export function StartProjectBand() {
                 <div className="mt-8 flex flex-wrap items-center gap-6">
                   <button
                     type="submit"
-                    className={`group inline-flex items-center justify-center bg-cream px-8 py-4 text-[12px] font-medium uppercase tracking-[0.12em] text-[#0b0b0b] transition-colors duration-300 hover:bg-cream/85 ${geist}`}
+                    disabled={sending}
+                    className={`group inline-flex items-center justify-center bg-cream px-8 py-4 text-[12px] font-medium uppercase tracking-[0.12em] text-[#0b0b0b] transition-colors duration-300 hover:bg-cream/85 disabled:opacity-60 ${geist}`}
                   >
-                    <HoverText text="Send message" />
+                    <HoverText text={sending ? 'Sending' : 'Submit'} />
                   </button>
                   <p className={`max-w-[240px] text-[11px] leading-[1.5] text-cream/40 ${geist}`}>
                     By submitting, you agree to our{' '}
@@ -367,7 +374,18 @@ export function StartProjectBand() {
                     .
                   </p>
                 </div>
+
+                {sendError && (
+                  <p className="mt-5 text-[12px]" style={{ color: ERR }}>
+                    Something went wrong. Please try again, or email{' '}
+                    <a href="mailto:projects@arrvl.studio" className="underline">
+                      projects@arrvl.studio
+                    </a>
+                    .
+                  </p>
+                )}
               </form>
+              )
             ) : (
               <Details />
             )}
