@@ -5,7 +5,7 @@ import { AboutHero } from './components/about-hero'
 import { AboutStory } from './components/about-story'
 import { AboutApproach } from './components/about-approach'
 import { AboutStatement } from './components/about-statement'
-import { AboutCTA } from './components/about-cta'
+import { StartProjectBand } from '../components/start-project-band'
 
 export const metadata = {
   title: 'About · ARRVL',
@@ -22,7 +22,7 @@ export default function AboutPage() {
         <AboutStory />
         <AboutApproach />
         <AboutStatement />
-        <AboutCTA />
+        <StartProjectBand />
       </main>
       <Footer />
       <CookieBanner />

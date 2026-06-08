@@ -2,7 +2,7 @@ import { SiteHeader } from '../components/site-header'
 import { CookieBanner } from '../components/cookie-banner'
 import { ProjectsBrowser } from './components/projects-browser'
 import { ProjectsFAQ } from './components/projects-faq'
-import { ProjectsCTA } from './components/projects-cta'
+import { StartProjectBand } from '../components/start-project-band'
 import { ProjectsFooter } from './components/projects-footer'
 
 export const metadata = {
@@ -18,7 +18,7 @@ export default function ProjectsPage() {
       <main>
         <ProjectsBrowser />
         <ProjectsFAQ />
-        <ProjectsCTA />
+        <StartProjectBand />
       </main>
       <ProjectsFooter />
       <CookieBanner />
