@@ -28,6 +28,9 @@
 # /public/**/* PNGs are real assets so we only ignore root-level *.png.
 /*.png
 
+# mobile-audit screenshot output (scratch QA artifacts)
+/scripts/mobile/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

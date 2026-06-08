@@ -223,16 +223,16 @@ export function HeroSection() {
                   <span className="text-cream/30">/</span>
                   <span>Motion</span>
                 </div>
-                <div className="flex shrink-0 items-center gap-3 lg:translate-x-2">
+                <div className="flex w-full flex-col gap-3 lg:w-auto lg:flex-row lg:items-center lg:shrink-0 lg:translate-x-2">
                   <TransitionLink
                     href="/projects"
-                    className={`group inline-flex w-[180px] items-center justify-center border border-cream/30 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-cream transition-colors duration-300 hover:border-cream/60 hover:bg-cream/5 ${geist}`}
+                    className={`group inline-flex w-full items-center justify-center lg:w-[180px] border border-cream/30 px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-cream transition-colors duration-300 hover:border-cream/60 hover:bg-cream/5 ${geist}`}
                   >
                     <HoverText text="Take a look" />
                   </TransitionLink>
                   <TransitionLink
                     href="/contact"
-                    className={`group inline-flex w-[180px] items-center justify-center border border-transparent bg-cream px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#0b0b0b] transition-colors duration-300 hover:bg-cream/85 ${geist}`}
+                    className={`group inline-flex w-full items-center justify-center lg:w-[180px] border border-transparent bg-cream px-5 py-2.5 text-[12px] font-medium uppercase tracking-[0.12em] text-[#0b0b0b] transition-colors duration-300 hover:bg-cream/85 ${geist}`}
                   >
                     <HoverText text="Start a project" />
                   </TransitionLink>
