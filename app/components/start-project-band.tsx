@@ -87,7 +87,7 @@ function Toggle({ view, setView }: { view: 'form' | 'details'; setView: (v: 'for
 function DetailRow({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex gap-5">
-      <span className="mt-1 select-none text-cream/30">—</span>
+      <span aria-hidden className="mt-[7px] h-px w-3 shrink-0 bg-cream/30" />
       <div>
         <p className={`text-[10px] font-medium uppercase tracking-[0.2em] text-cream/40 ${geist}`}>{label}</p>
         <div className="mt-2">{children}</div>
