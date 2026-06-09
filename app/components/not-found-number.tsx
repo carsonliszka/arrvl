@@ -5,13 +5,8 @@ import { useEffect, useRef } from 'react'
 const NUM_STYLE = { fontSize: 'clamp(150px, 31vw, 440px)' } as const
 const NUM_CLASS = 'font-extrabold leading-none tracking-[-0.04em] select-none'
 
-/**
- * The 404 numerals. By default a white outline. On a fine pointer a canvas
- * takes over: moving the cursor across the digits lays down persistent red
- * brush strokes that fill the glyphs in — you paint the 404 red, stroke by
- * stroke, and it stays. The DOM outline below is the no-JS / touch fallback.
- * (Falling paint droplets are handled separately by <PaintDrips />.)
- */
+// the 404 digits. white outline by default; on a real cursor a canvas takes over and you
+// paint them solid red, stroke by stroke. the dom outline is the touch / no-js fallback.
 export function NotFoundNumber() {
   const sizerRef = useRef<HTMLSpanElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)

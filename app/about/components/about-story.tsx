@@ -106,7 +106,7 @@ export function AboutStory() {
             </div>
           </div>
 
-          {/* by the numbers — staggered stats + dots */}
+          {/* by the numbers, staggered stats */}
           <div data-story-fade className="lg:col-span-5 lg:col-start-8" style={{ opacity: 0 }}>
             <p className={`mb-10 text-[12px] font-medium uppercase tracking-[0.14em] text-[#0b0b0b]/55 ${geist}`}>
               By the numbers

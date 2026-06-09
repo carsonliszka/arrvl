@@ -13,13 +13,8 @@ const SPRING = 0.012
 const DAMP = 0.94
 const SPREAD = 0.16
 
-/**
- * Full-viewport paint physics for the 404 page. The cursor sheds red droplets
- * as it moves; each falls under gravity and merges into a pool of red liquid at
- * the bottom of the page. The pool fills like a container, ripples on impact,
- * and the cursor can shove / woosh it around. A black Geist line is uncovered
- * in the paint as the level rises. Fine pointers only.
- */
+// 404 paint physics. the cursor drips red, it pools at the bottom, ripples, and uncovers
+// a line of text as the level rises. cursor only.
 export function PaintDrips() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 

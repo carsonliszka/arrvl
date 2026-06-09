@@ -16,7 +16,7 @@ export function StrategySection() {
 
   return (
     <>
-      {/* ───────── STRATEGY BEFORE PIXELS (cream block) ───────── */}
+      {/* strategy before pixels (cream) */}
       <section className={`relative overflow-hidden bg-[#e9e9e9] ${ink}`}>
         <div
           aria-hidden
@@ -28,10 +28,10 @@ export function StrategySection() {
           <div className={`flex flex-wrap gap-x-14 gap-y-3 text-[11px] font-medium uppercase tracking-[0.16em] lg:w-1/2 lg:flex-nowrap lg:justify-between lg:gap-x-0 ${geist}`}>
             <span>Launched</span>
             <span>24+ Projects</span>
-            <span className="text-[#0b0b0b]/55 lg:translate-x-full">2018&ndash;26©</span>
+            <span className="text-[#0b0b0b]/55 lg:translate-x-full">2018-26©</span>
           </div>
 
-          {/* headline — top right */}
+          {/* headline, top right */}
           <h2
             className={`mt-10 text-right font-semibold uppercase leading-[0.85] tracking-[-0.04em] lg:absolute lg:right-14 lg:top-16 lg:mt-0 ${geist}`}
             style={{ fontSize: 'clamp(40px,6vw,92px)' }}
@@ -49,7 +49,7 @@ export function StrategySection() {
             />
           </div>
 
-          {/* paragraph — left */}
+          {/* paragraph, left */}
           <p
             className={`mt-12 max-w-[420px] text-[12px] uppercase leading-[1.6] tracking-[0.03em] text-[#0b0b0b]/70 lg:absolute lg:left-[16%] lg:top-[42%] lg:mt-0 lg:max-w-[24%] ${geist}`}
           >
@@ -58,7 +58,7 @@ export function StrategySection() {
             <span className="font-semibold text-[#0b0b0b]">spacing, typography, image quality, and structure.</span>
           </p>
 
-          {/* 12+ stat — right, below image */}
+          {/* 12+ stat, bottom right */}
           <div className="mt-14 lg:absolute lg:right-14 lg:bottom-10 lg:mt-0 lg:text-right">
             <div className={`font-semibold leading-none tracking-[-0.03em] ${geist}`} style={{ fontSize: 'clamp(48px,5vw,84px)' }}>
               12+
@@ -70,7 +70,7 @@ export function StrategySection() {
             </p>
           </div>
 
-          {/* see the work — bottom left */}
+          {/* see the work, bottom left */}
           <div className="mt-14 lg:absolute lg:bottom-16 lg:left-[16%] lg:mt-0">
             <TransitionLink
               href="/projects"
@@ -83,7 +83,7 @@ export function StrategySection() {
         </div>
       </section>
 
-      {/* ───────── PROVE WHAT'S POSSIBLE (dark block) ───────── */}
+      {/* prove what's possible (dark) */}
       <section className="relative overflow-hidden border-b border-cream/12 bg-[#0b0b0b] text-cream">
         <div
           aria-hidden
@@ -92,10 +92,10 @@ export function StrategySection() {
 
         <div className="relative mx-auto max-w-[1600px] px-6 py-20 md:px-10 md:py-24 lg:min-h-[920px] lg:px-14 lg:pb-20 lg:pt-8">
           <div className="flex justify-end">
-            <span className={`text-[11px] uppercase tracking-[0.16em] text-cream/40 ${geist}`}>2018&ndash;26©</span>
+            <span className={`text-[11px] uppercase tracking-[0.16em] text-cream/40 ${geist}`}>2018-26©</span>
           </div>
 
-          {/* headline — center */}
+          {/* headline, center */}
           <h2
             className={`mt-10 text-center font-semibold uppercase leading-[0.85] tracking-[-0.03em] lg:mt-10 lg:w-1/2 lg:text-right ${geist}`}
             style={{ fontSize: 'clamp(40px,6vw,104px)' }}

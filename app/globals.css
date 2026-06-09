@@ -108,9 +108,8 @@ button, a, input, textarea, select, img, picture, video, section, article, aside
   .proj-marquee { animation: none; }
 }
 
-/* 404 — interactive paint version (devices with a real cursor) vs the clean
-   static version (touch / no-hover). Matches the pointer gate the 404 canvases
-   use, so mobile users get the simple branded page. */
+/* 404: interactive paint version (real cursor) vs the clean static one (touch).
+   same pointer gate the canvases use, so mobile gets the simple page. */
 .nf-fine {
   display: none;
 }

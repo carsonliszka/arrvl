@@ -37,17 +37,17 @@ const SERVICES = [
 ]
 
 const TIMELINES = [
-  'Within 2 – 4 weeks',
-  '1 – 2 months',
-  '2 – 4 months',
+  'Within 2 to 4 weeks',
+  '1 to 2 months',
+  '2 to 4 months',
   'Flexible / not sure',
 ]
 
 const INVESTMENTS = [
   'Under $10K',
-  '$10K – 25K',
-  '$25K – 50K',
-  '$50K – 100K',
+  '$10K to 25K',
+  '$25K to 50K',
+  '$50K to 100K',
   '$100K+',
   'Not sure yet',
 ]
@@ -122,15 +122,13 @@ const phoneInternational = (phone: string, iso: string) => {
   return ayt.getNumber()?.formatInternational() ?? `${countryOf(iso).dial} ${phone}`
 }
 
-// CRM submission endpoint. Override per-environment with NEXT_PUBLIC_CRM_ENDPOINT
-// (e.g. when the CRM moves to a custom domain).
+// crm endpoint. override with NEXT_PUBLIC_CRM_ENDPOINT if it moves.
 const CRM_ENDPOINT =
   process.env.NEXT_PUBLIC_CRM_ENDPOINT ??
   'https://crm-phi-gray.vercel.app/api/submissions'
 
-// The CRM keeps the free-text description as `message` and captures the
-// structured answers (services / timeline / investment) as an ordered
-// label/value `fields` array. Lengths are clamped to the CRM's field caps.
+// crm stores the free text as `message` and the structured answers (services /
+// timeline / investment) as a label/value `fields` array, clamped to its caps.
 function crmPayload(d: FormState) {
   const fields = [
     d.services.length ? { label: 'Services', value: d.services.join(', ') } : null,
@@ -258,8 +256,8 @@ export function ContactForm() {
         localStorage.removeItem(STORAGE_KEY)
       } catch {}
     } catch {
-      // The endpoint always 200s on its own rejections, so this is a genuine
-      // network failure — keep the user on the form so the lead isn't lost.
+      // the endpoint always 200s on its own rejections, so this is a real
+      // network failure. keep the user on the form so the lead isn't lost.
       setSendError(true)
     } finally {
       setSending(false)

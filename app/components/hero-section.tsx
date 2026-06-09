@@ -61,9 +61,8 @@ function LocalTime() {
   return <span className="tabular-nums text-cream/70">{time ?? '--:--'} PT</span>
 }
 
-// Showreel as the card background. Renders a static (already color-graded) poster on
-// mobile / reduced-motion with no video download; on capable screens the reel fades in
-// over the poster, and only after the intro + hero reveal have settled.
+// showreel as the card bg. poster on mobile or reduced-motion (no video download).
+// on desktop the reel fades in over the poster once the intro + hero reveal settle.
 function HeroShowreel({ isLoaded }: { isLoaded: boolean }) {
   const ref = useRef<HTMLVideoElement>(null)
   const [mode, setMode] = useState<'poster' | 'video'>('poster')
@@ -132,7 +131,7 @@ export function HeroSection() {
       </div>
       <div className="pointer-events-none absolute inset-0 bg-black/25" />
 
-      {/* TOP NAV */}
+      {/* top nav */}
       <header className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-6 py-6 md:px-10 lg:px-12">
         <div className="flex items-center gap-3" style={reveal(0.1)}>
           <TransitionLink href="/" aria-label="ARRVL home" className="flex items-center gap-2.5">
@@ -169,7 +168,7 @@ export function HeroSection() {
         </nav>
       </header>
 
-      {/* CENTER CARD */}
+      {/* center card */}
       <div className="relative z-20 flex h-full items-center justify-center px-6">
         <div
           className="relative w-full max-w-[760px] will-change-[transform,opacity]"
@@ -243,7 +242,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* BOTTOM STATUS BAR */}
+      {/* bottom status bar */}
       <div
         className={`absolute inset-x-0 bottom-0 z-30 flex items-center justify-between px-6 py-5 text-[10px] uppercase tracking-[0.16em] text-cream/45 md:px-10 lg:px-12 ${geist}`}
         style={reveal(1)}
