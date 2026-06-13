@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { TransitionLink } from './transition-link'
 import { HoverText } from './hover-text'
+import { stripEmoji } from '../lib/strip-emoji'
 
 const geist = 'font-[family-name:var(--font-geist)]'
 
@@ -202,8 +203,8 @@ export function StartProjectBand() {
     if (sending) return
     const fd = new FormData(e.currentTarget)
     if (String(fd.get('contact_ref_code') ?? '')) return
-    const nm = String(fd.get('fullName') ?? '').trim()
-    const em = String(fd.get('email') ?? '').trim()
+    const nm = stripEmoji(String(fd.get('fullName') ?? '')).trim()
+    const em = stripEmoji(String(fd.get('email') ?? '')).trim()
     const sv = String(fd.get('service') ?? '')
     setName(nm)
     setEmail(em)
@@ -319,7 +320,7 @@ export function StartProjectBand() {
                 />
 
                 <Field label="Full name" error={touched && !name.trim() ? 'Please enter your name' : ''}>
-                  <input name="fullName" value={name} onChange={(e) => setName(e.target.value)} placeholder="Full Name" className={inputCls} />
+                  <input name="fullName" value={name} onChange={(e) => setName(stripEmoji(e.target.value))} placeholder="Full Name" className={inputCls} />
                 </Field>
 
                 <Field label="Your email address" error={touched && !isEmail(email) ? 'Please enter a valid email' : ''}>
@@ -327,7 +328,7 @@ export function StartProjectBand() {
                     type="email"
                     name="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => setEmail(stripEmoji(e.target.value))}
                     placeholder="example@email.com"
                     className={inputCls}
                   />

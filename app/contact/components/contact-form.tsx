@@ -11,6 +11,7 @@ import {
   type CountryCode,
 } from 'libphonenumber-js'
 import { Cta } from '../../components/cta'
+import { stripEmoji } from '../../lib/strip-emoji'
 
 const STEPS = [
   { n: '01', label: 'Introduction' },
@@ -136,11 +137,11 @@ function crmPayload(d: FormState) {
     d.investment ? { label: 'Investment', value: d.investment } : null,
   ].filter((f): f is { label: string; value: string } => f !== null)
   return {
-    name: d.fullName.slice(0, 200),
-    email: d.email.slice(0, 320),
+    name: stripEmoji(d.fullName).slice(0, 200),
+    email: stripEmoji(d.email).slice(0, 320),
     phone: d.phone ? phoneInternational(d.phone, d.phoneCountry).slice(0, 40) : '',
-    company: d.company.slice(0, 200),
-    message: (d.description.trim() || '—').slice(0, 5000),
+    company: stripEmoji(d.company).slice(0, 200),
+    message: (stripEmoji(d.description).trim() || '—').slice(0, 5000),
     fields,
     source: 'dev',
     contact_ref_code: '',
@@ -198,10 +199,13 @@ export function ContactForm() {
     setTouched((t) => ({ ...t, ...Object.fromEntries(fields.map((f) => [f, true])) }))
 
   const set = <K extends keyof FormState>(k: K, v: FormState[K]) =>
-    setData((d) => ({
-      ...d,
-      [k]: k === 'phone' ? (formatNational(v as string, d.phoneCountry) as FormState[K]) : v,
-    }))
+    setData((d) => {
+      const val = typeof v === 'string' ? (stripEmoji(v) as FormState[K]) : v
+      return {
+        ...d,
+        [k]: k === 'phone' ? (formatNational(val as string, d.phoneCountry) as FormState[K]) : val,
+      }
+    })
 
   const setCountry = (iso: string) =>
     setData((d) => ({ ...d, phoneCountry: iso, phone: formatNational(d.phone, iso) }))
